@@ -19,6 +19,7 @@ namespace GildedRoseTests
         public Task ThirtyDays()
         {
             var fakeoutput = new StringBuilder();
+
             Console.SetOut(new StringWriter(fakeoutput));
             Console.SetIn(new StringReader("a\n"));
 
