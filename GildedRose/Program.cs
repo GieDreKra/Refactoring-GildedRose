@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GildedRose;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 
 namespace GildedRoseKata
@@ -7,6 +9,14 @@ namespace GildedRoseKata
     {
         public static void Main(string[] args)
         {
+            var services = new ServiceCollection();
+
+            services.ConfigureServices();
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            var _calculationService = serviceProvider.GetService<CalculationService>();
+
             Console.WriteLine("OMGHAI!");
 
             IList<Item> Items = new List<Item>{
@@ -37,8 +47,7 @@ namespace GildedRoseKata
 				new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
-            var app = new GildedRose(Items);
-
+            var app = new GildedRose(Items, _calculationService);
 
             for (var i = 0; i < 31; i++)
             {
@@ -49,7 +58,7 @@ namespace GildedRoseKata
                     System.Console.WriteLine(Items[j].Name + ", " + Items[j].SellIn + ", " + Items[j].Quality);
                 }
                 Console.WriteLine("");
-                app.UpdateQuality();
+                app.Update();
             }
         }
     }
